@@ -14,7 +14,7 @@ authUsr.post("/", async (req, res) => {
       if (usrData[0].password !== req.body.password) {
         res.json({ message: "Wrong password" });
       } else {
-        res.json(usrData);
+        res.json({clientID:usrData[0]._id,favorites:usrData[0].favorites, message:"loggedin"});
       }
     }
   } catch (err) {
