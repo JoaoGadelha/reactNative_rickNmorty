@@ -26,13 +26,13 @@ favorites.post("/", async (req, res) => {
       { $set: { favorites: favorites } }
     );
 
-
- usrData = await usrSchema.find({
+    let usrData2 = await usrSchema.find({
       _id: req.body.clientID,
     });
 
-	
-    res.json(usrData[0].favorites);
+    
+    res.json(usrData2[0].favorites);
+
   } catch (err) {
     res.json({ message: err });
   }
