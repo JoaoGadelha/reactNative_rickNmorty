@@ -5,40 +5,57 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
+  Button,
 } from "react-native";
+import {postData} from '../functions/postData'
 
-const Signup = () => {
+const Signup = ({ navigation }) => {
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [name, setName] = useState("");
 
-  handleSignUp = () => {};
+  let Signup = async () => {
+    let reqUrl = "https://joao-gadelha-rick-n-morty.herokuapp.com/createUser";
+    let data = {
+      email: email,
+      password: password,
+    };
+    let response = await postData(reqUrl, data);
+    return response;
+  };
+
+  const pressHandler = async () => {
+    await Signup();
+    navigation.navigate("Login");
+  };
 
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.inputBox}
         value={name}
-        onChangeText={(name) => setState(name)}
+        onChangeText={(name) => setName(name)}
         placeholder="Full Name"
       />
       <TextInput
         style={styles.inputBox}
         value={email}
-        onChangeText={(email) => setState(email)}
+        onChangeText={(email) => setEmail(email)}
         placeholder="Email"
         autoCapitalize="none"
       />
       <TextInput
         style={styles.inputBox}
         value={password}
-        onChangeText={(password) => setState(password)}
+        onChangeText={(password) => setPassword(password)}
         placeholder="Password"
         secureTextEntry={true}
       />
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Signup</Text>
-      </TouchableOpacity>
+      <Button
+        style={styles.button}
+        title="Signup"
+        onPress={pressHandler}
+      ></Button>
     </View>
   );
 };

@@ -30,9 +30,6 @@ app.use(express.json());
 app.use("/createUser", createUser);
 app.use("/authUsr", authUsr);
 app.use("/favorites", favorites);
-/*app.use("/getPosition", getPosition);
-app.use("/resetPosition", resetPosition);
-app.use("/moveProbe", moveProbe);*/
 
 //database
 mongoose.connect(

@@ -26,9 +26,13 @@ favorites.post("/", async (req, res) => {
       { $set: { favorites: favorites } }
     );
 
-    console.log(updateFavorites);
 
-    res.json(updateFavorites);
+ usrData = await usrSchema.find({
+      _id: req.body.clientID,
+    });
+
+	
+    res.json(usrData[0].favorites);
   } catch (err) {
     res.json({ message: err });
   }

@@ -7,31 +7,32 @@ import {
   Text,
   Button,
 } from "react-native";
+import { postData } from "../functions/postData";
 
 const Login = ({ navigation }) => {
   [email, setEmail] = useState("");
   [password, setPassword] = useState("");
+  [authResponse, setAuthResponse] = useState([]);
 
   let [auth, setAuth] = useState(false);
   let [serverResponse, setServerResponse] = useState([]);
-  let request =
-    "https://api-do-joao.herokuapp.com/find/id/5f6ccf7f2c135c3ee6ad7cec?searchOptions=id";
 
-  useEffect(() => {}, []);
-
-  const pressHandler = () => {
-    let requestAPI = async () => {
-      let response = await fetch(request);
-      let json = await response.json();
-      setServerResponse(json);
-      if (json[0].type === "bed") {
-        navigation.navigate('CharList')
-      }
+  let authUsr = async () => {
+    let reqUrl = "https://joao-gadelha-rick-n-morty.herokuapp.com/authUsr";
+    let data = {
+      email: email,
+      password: password,
     };
-    requestAPI();
+    let response = await postData(reqUrl, data);
+    return response;
   };
 
-
+  const pressHandler = async () => {
+    setAuthResponse(await authUsr());
+    if (authResponse.message === "loggedin") {
+      navigation.navigate("CharList", {clientID:authResponse.clientID});
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -52,10 +53,9 @@ const Login = ({ navigation }) => {
       <TouchableOpacity style={styles.button}>
         <Button
           style={styles.buttonText}
-          title='Login'
+          title="Login"
           onPress={pressHandler}
-        >
-        </Button>
+        ></Button>
       </TouchableOpacity>
       <Button
         title="Don't have an account yet? Sign up"
