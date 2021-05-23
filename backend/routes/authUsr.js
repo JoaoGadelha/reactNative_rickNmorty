@@ -9,10 +9,12 @@ authUsr.post("/", async (req, res) => {
     });
     
     if (usrData.length === 0) {
-      res.json({ message: "User not found" });
+	//usuario nao existe
+      res.json({ message: "-1" });
     } else {
       if (usrData[0].password !== req.body.password) {
-        res.json({ message: "Wrong password" });
+	// password errado
+        res.json({ message: "-2" });
       } else {
         res.json({clientID:usrData[0]._id,favorites:usrData[0].favorites, message:"loggedin"});
       }
