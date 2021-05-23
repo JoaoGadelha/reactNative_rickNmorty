@@ -4,19 +4,26 @@ let usrSchema = require("../usrSchema");
 
 authUsr.post("/", async (req, res) => {
   try {
-    const usrData = await usrSchema.find({
-      email: req.body.email,
-    });
-    
+    if (req.body.email !== "" && req.body.password !== "") {
+      const usrData = await usrSchema.find({
+        email: req.body.email,
+      });
+    } else {
+      res.json({ message: "-3" });
+    }
     if (usrData.length === 0) {
-	//usuario nao existe
+      //usuario nao existe
       res.json({ message: "-1" });
     } else {
       if (usrData[0].password !== req.body.password) {
-	// password errado
+        // password errado
         res.json({ message: "-2" });
       } else {
-        res.json({clientID:usrData[0]._id,favorites:usrData[0].favorites, message:"loggedin"});
+        res.json({
+          clientID: usrData[0]._id,
+          favorites: usrData[0].favorites,
+          message: "loggedin",
+        });
       }
     }
   } catch (err) {
