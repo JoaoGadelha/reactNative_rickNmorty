@@ -45,4 +45,7 @@ Receives the ID of the client (clientID), the ID of the character (charID) and t
 
 ## Running the app
   To run the app in a mobile device, first install Expo Go app and scan the following QR code:
+   <p align="center">
+<img src="./qrcode.png" width="500">
+ </p>
   
