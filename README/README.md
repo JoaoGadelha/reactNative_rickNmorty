@@ -37,24 +37,13 @@ The list of characters page:
 ### POST /authUsr
 Receives an object with the email and password inputed by the user and compares the data with the information stored in the cloud at the MongoDB Atlas website. Whenever the user inputs something wrong, such as when both email and password fields are empty, an alert informs the user that his/her inputs are wrong.
   
+  ### POST /createUser
+  Receives an object with the email and password and creates a new account for the client.
  
 ### POST /favorites
     Receives the ID of the client (clientID), the ID of the character (charID) and the flag favAction. If favAction = 1, the character will be added to the favorites. Otherwise, it will be removed.  Returns the updated array of favorites.
 
 
-### POST /resetPosition
-Returns the object {x:0, y:0, direction:'D'}, confirming that the probe is on its initial position and direction.
-
-### POST /moveProbe
-Can either return an object with the new position of the probe or an error message in case the inputed sequence moves the probe out of the 5x5 grid. Also, in case the probe didn't return an error, a string describing the movement of the probe is returned to the frontend. A movement sequence is represented by an array. So for example, if the backend receives ["M", "M", "GE", "M", "GD"] and the probe is in position (0,0) facing the right direction, it must move two cells on the x-axis to the right, turn left, move up one cell and turn right, returning the following object to the interface 
-
-```
-{
-    "NLinstructions": "The probe moved 2 cells in the x-axis, turned to the left, moved 1 cell in the y-axis and turned to the right.",
-    "x": "2",
-    "y": "1",
-    "direction": "D"
-}
 ```
 When an invalid sequence of movements is sent to the backend, it returns with the following error message:
 ```
