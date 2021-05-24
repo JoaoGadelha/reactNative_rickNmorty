@@ -1,7 +1,6 @@
-<h1 align="center">Space Probe Movement Control Interface - Credere</h1>
+<h1 align="center">Rick and Morty App</h1>
 <h2 align="center">
 
-This project was developed as a job test for Credere</h1>
 <img src="https://img.shields.io/badge/made%20by-joaoricardotg-blue.svg" >
 
 ## The App
