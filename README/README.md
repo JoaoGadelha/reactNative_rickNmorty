@@ -41,7 +41,7 @@ Receives an object with the email and password inputed by the user and compares 
   Receives an object with the email and password and creates a new account for the client.
  
 ### POST /favorites
-    Receives the ID of the client (clientID), the ID of the character (charID) and the flag favAction. If favAction = 1, the character will be added to the favorites. Otherwise, it will be removed.  Returns the updated array of favorites.
+Receives the ID of the client (clientID), the ID of the character (charID) and the flag favAction. If favAction = 1, the character will be added to the favorites. Otherwise, it will be removed.  Returns the updated array of favorites.
 
 
 ```
