@@ -1,5 +1,7 @@
 <h1 align="center">Rick and Morty App</h1>
 <h2 align="center">
+  
+  EDITANDO AINDA
 
 <img src="https://img.shields.io/badge/made%20by-joaoricardotg-blue.svg" >
 
