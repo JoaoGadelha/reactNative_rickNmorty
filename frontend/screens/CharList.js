@@ -1,30 +1,27 @@
-import React, { useEffect, useState } from "react";
-import {
-  View,
-  Image,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  Button,
-} from "react-native";
+import React, { useEffect, useState, useRef } from "react";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { postData } from "../functions/postData";
 import { Icon } from "react-native-elements";
-import { AntDesign } from "@expo/vector-icons";
+import CharComponent from "./CharComponent";
 
-const CharList = ({ navigation }) => {
-  let [favorites, setFavorites] = useState([1, 2, 3]);
-  let [apiRes, setApiRes] = useState([]);
+const CharList = ({ route,navigation }) => {
+  let [favorites, setFavorites] = useState([]);
+  let [apiRes, setApiRes] = useState({ info: 1 });
   let [page, setPage] = useState(1);
-  let [isHeart, setIsHeart] = useState(true);
+  let [pageLoading, setPageLoading] = useState(false);
+  const flatListRef = useRef();
 
-  const changeFav = (action, charID) => {
-    // se 'action' eh falso, remove char dos favoritos
+  const toTop = () => {
+    flatListRef.current.scrollToOffset({ animated: true, offset: 0 });
+  };
+
+  const changeFav = async (action, charID) => {
     let aux = [...favorites];
     let favAction;
     let data;
     let url = "https://joao-gadelha-rick-n-morty.herokuapp.com/favorites";
 
+    // se 'action' eh falso, remove char dos favoritos
     if (!action) {
       const index = aux.indexOf(charID);
       if (index > -1) {
@@ -36,22 +33,27 @@ const CharList = ({ navigation }) => {
       favAction = "1";
     }
 
-    data = { clientID: item.id, charID: charID, favAction: favAction };
+    data = {
+      clientID: route.params.clientID,
+      charID: charID,
+      favAction: favAction,
+    };
+
     let response = await postData(url, data);
-    setFavorites(aux);
+    setFavorites(response);
   };
 
   const nextPage = () => {
-    if (apiRes.info.next !== null) {
+    if (apiRes.info.next !== null && !pageLoading) {
       setPage((page) => page + 1);
-      fetchRnMAPI();
+      setPageLoading(true);
     }
   };
 
   const prevPage = () => {
-    if (page >= 1) {
+    if (page > 1 && !pageLoading) {
       setPage((page) => page - 1);
-      fetchRnMAPI();
+      setPageLoading(true);
     }
   };
 
@@ -64,46 +66,29 @@ const CharList = ({ navigation }) => {
   };
 
   useEffect(() => {
+    console.log(route.params);
+    setFavorites(route.params.favorites);
     fetchRnMAPI();
   }, []);
 
+  useEffect(() => {
+    console.log(page);
+    fetchRnMAPI();
+  }, [page]);
+
+  useEffect(() => {
+    setPageLoading(false);
+    toTop();
+  }, [apiRes]);
+
   return (
     <View style={styles.container}>
-      <FlatList
-        style={styles.imgContainer}
-        data={apiRes.results}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View>
-            <Image
-              style={styles.image}
-              source={{
-                uri: item.image,
-              }}
-            />
-            <Text>{item.name}</Text>
-            <Text>{item.status}</Text>
-            <Text>{item.species}</Text>
-            <Text>{item.gender}</Text>
-            {favorites.includes(item.id) && (
-              <AntDesign
-                size={40}
-                name="heart"
-                color="red"
-                onPress={() => changeFav(false, item.id)}
-              />
-            )}
-            {!favorites.includes(item.id) && (
-              <AntDesign
-                size={40}
-                name="hearto"
-                color="red"
-                onPress={() => changeFav(true, item.id)}
-              />
-            )}
-          </View>
-        )}
-      ></FlatList>
+      <CharComponent
+        changeFav={changeFav}
+        favorites={favorites}
+        RnM_APIresponse={apiRes.results}
+        flatListRef={flatListRef}
+      />
       <View style={styles.btnContainer}>
         <TouchableOpacity style={styles.button} onPress={prevPage}>
           <Icon name={"chevron-left"} size={30} color="#01a699" />
@@ -117,14 +102,18 @@ const CharList = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  imgContainer: {
-    width: "100%",
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 0,
   },
   btnContainer: {
     flexDirection: "row",
     width: "90%",
     justifyContent: "space-between",
   },
+  invisible: { display: "none" },
   button: {
     borderWidth: 1,
     borderColor: "rgba(0,0,0,0.2)",
@@ -134,17 +123,6 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: "#fff",
     borderRadius: 50,
-  },
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  image: {
-    flex: 1,
-    width: "100%",
-    height: 200,
-    resizeMode: "cover",
   },
 });
 

@@ -2,9 +2,9 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19000,
-  "expoServerNgrokUrl": "https://q4-she.anonymous.frontend.exp.direct",
-  "packagerNgrokUrl": "https://packager.q4-she.anonymous.frontend.exp.direct",
-  "ngrokPid": 1612,
-  "packagerPid": null,
+  "expoServerNgrokUrl": "https://q4-she.joaoricardotg.frontend.exp.direct",
+  "packagerNgrokUrl": "https://packager.q4-she.joaoricardotg.frontend.exp.direct",
+  "ngrokPid": 18948,
+  "packagerPid": 13408,
   "webpackServerPort": null
 }
