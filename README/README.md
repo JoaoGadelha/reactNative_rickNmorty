@@ -28,65 +28,19 @@ The list of characters page:
   <p align="center">
 <img src="./charlist.jpeg" width="500">
  </p>
-
-| Movements and Directions | Description |
-|--------------------------|-------------|
-| D| The probe is facing the 'right' direction.|
-| C| The probe is facing the 'up' direction.|
-| B| The probe is facing the 'down' direction.|
-| E| The probe is facing the 'left' direction.|
-| GD| Rotates the probe to the right.|
-| GE| Rotates the probe to the left.|
-| M| Moves the probe one cell forward.|
-
-
-The control interface for the probe contains 6 buttons, a display for the 5x5 grid and the position and orientation of the probe. Two textfields are displayed, one renders the stack of user inputs for the probe and the other displays the movement performed by the probe. 
-
-## Controller interface
-
-### Buttons
-
-There are 6 buttons in total, three for inserting new orders on the stack of order to be sent to the probe ('turn probe to the left', 'turn probe to the right' and 'move forward'), one to reset the probe position ('reset probe position'), one to send the movements to the probe ('submit movements') and another to clear the stack of movements ('clear movements queue'). The buttons are displayed bellow.
-
-<p align="center">
-  <img src="./buttons.png" width="50%">
-</p>
-
-### Grid display
-
-The app displays a 5x5 grid. Each cell in the grid represents a possible coordinate for the position of the probe, which is represented by a cell with red background and a white chevron. This last element represents the probe orientation. The image below represents the configuration of the probe the moment it has landed, in position (0,0) facing the right direction.
-
-<p align="center">
-  <img src="./init_configuration.png" width="50%">
-</p>
-
-### Text displays
-
-There are two text displays, one for rendering the stack of movements inputed by the user through the input buttons and the other displays a string that describes the movement performed by the probe. For example, let's use the following sequence, with the probe starting at (0,0) facing the right direction: 
-```
-turn left - move forward - move forward - turn probe to the right - move forward
-```
-then the first text display will show:
-
-<p align="center">
-  <img src="./text_display1.png" width="20%">
-</p>
-
-And the result for the probe movement displayed in the second text display should be:
-
-<p align="center">
-  <img src="./text_display2.png" width="20%">
-</p>
-
-## Technologies used
-The frontend was built with React.js, while the backend was built in Node.js and Express.js. The app saves the probe info in a Mongo database running in MongoDB Atlas.
-
-The site is live at https://joaoricardotg-credere.netlify.app/, while the backend is hosted in https://credere-backend.herokuapp.com/ (the backend doesn't display anything, it just serves the requests from the frontend. If you want to interact with it, access the routes explained below through the app or Postman).
-
+  
+## Database  
+  The database is stored in MongoDB Atlas, a cloud version of MongoDB. Each registry contains the email, password, the ID of the client and an array of favorite characters IDs.
+  
 ## Backend routes
 
-### GET /getPosition
-Returns an object that informs the frontend of the current position and orientation of the probe, for example, if the probe is is position (2,2) facing the 'C' direction, the route returns {x:2, y:2, direction:'C'}.
+### POST /authUsr
+Receives an object with the email and password inputed by the user and compares the data with the information stored in the cloud at the MongoDB Atlas website. Whenever the user inputs something wrong, such as when both email and password fields are empty, an alert informs the user that his/her inputs are wrong.
+  
+ 
+### POST /favorites
+    Receives the ID of the client (clientID), the ID of the character (charID) and the flag favAction. If favAction = 1, the character will be added to the favorites. Otherwise, it will be removed.  Returns the updated array of favorites.
+
 
 ### POST /resetPosition
 Returns the object {x:0, y:0, direction:'D'}, confirming that the probe is on its initial position and direction.
