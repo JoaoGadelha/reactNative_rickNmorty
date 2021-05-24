@@ -1,7 +1,6 @@
 <h1 align="center">Rick and Morty App</h1>
 <h2 align="center">
   
-  EDITANDO AINDA
   <img src="https://img.shields.io/badge/made%20by-joaoricardotg-blue.svg" >
  
 ## The App
@@ -9,7 +8,6 @@
   <p align="center">
 <img src="./login.jpeg" width="500">
  </p>
-EDITANDO AINDA<br/>
   This is an app built in React Native using Expo for the frontend and Node.js/Express.js and MongoDB Atlas for the backend. The app works for both Android and iOS. 
   The app features a login and a signup pages. After the user is authenticated, a list of characters from the cartoon 'Rick and Morty' is displayed. The list is divided in 20 characters per page. The user can mark characters as favorites, which will be saved on the cloud. 
   The login page. Both login and signup pages have animated input fields that jump up and down when the page is loaded:
