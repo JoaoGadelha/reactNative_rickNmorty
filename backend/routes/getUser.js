@@ -4,8 +4,8 @@ let usrSchema = require('../usrSchema');
 
 
 
-createUser.post('/', async (req, res) => {
-    // hashear senhas 
+createUser.get('/', async (req, res) => {
+    
      let usr = new usrSchema({
         email: req.body.email,
         password: req.body.password,

@@ -2,6 +2,7 @@ let express = require("express");
 let authUsr = express.Router();
 let usrSchema = require("../usrSchema");
 
+// fazer autenticacao com tokens (jwt)
 authUsr.post("/", async (req, res) => {
   try {
     let usrData;
@@ -11,6 +12,7 @@ authUsr.post("/", async (req, res) => {
         email: req.body.email,
       });
     } else {
+      // trocar numeros por codigos
       // campos de email ou password estao vazios
       return res.json({ message: "-3" });
     }
